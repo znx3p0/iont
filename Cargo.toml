@@ -3,6 +3,15 @@ name = "iont"
 version = "0.1.0"
 authors = ["Jose Salazar <znx3p0@gmail.com>"]
 edition = "2018"
+license = "MIT"
+documentation = "https://docs.rs/iont/"
+repository = "https://github.com/znx3p0/iont"
+description = """
+IONt | ion transpiler
+this program can transpile directories of ion files to a single json file,
+transpile single ion files to single json files,
+and transpile directories of ion files to another directory with json files
+"""
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
