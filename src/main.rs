@@ -4,10 +4,6 @@ use std::env::args;
 fn main() {
 
     let args = args().collect::<Vec<_>>();
-    if args.len() == 1 {
-        usage();
-        std::process::exit(1);
-    }
 
     let mut args = args.into_iter();
     args.next();
@@ -43,14 +39,13 @@ fn parse_args(mut a: std::vec::IntoIter<String>) -> Options {
     // };
 
     Options {
-        input: a.next().unwrap(),
-        out: a.next().unwrap()
+        input: a.next().unwrap_or(std::env::current_dir().unwrap().to_str().unwrap().to_string()),
+        out: a.next().unwrap_or("out.json".to_string())
     }
 
 }
 
 fn run(args: Options) {
-    println!("{}", args.input);
 
     if std::fs::read_dir(&args.input).is_ok() {
         // input is dir
@@ -62,9 +57,11 @@ fn run(args: Options) {
                     let name = s.file_name();
                     if name.to_str().unwrap().contains(".ion") {
                         let o = std::fs::read_to_string(&s.path()).unwrap();
-                        let o = ions::ion_to_json(&o).unwrap();
+                        let mut o = ions::ion_to_json(&o).unwrap();
+                        if o == "}" {
+                            o = "".to_string();
+                        }
                         std::fs::write(&format!("{}/{}.json", args.out, name.to_str().unwrap()), o).unwrap();
-                        println!("Successfully transpiled ion to json")
                     }
                 }
             });
@@ -86,6 +83,10 @@ fn run(args: Options) {
             });
             
             let o = ions::ion_to_json(&buf).unwrap();
+            if o == "}" {
+                println!("No ion files found");
+                std::process::exit(1);
+            }
             std::fs::write(args.out, o).unwrap();
         }
         
@@ -95,8 +96,11 @@ fn run(args: Options) {
 
         let o = std::fs::read_to_string(args.input).unwrap();
         let o = ions::ion_to_json(&o).unwrap();
+        if o == "}" {
+            println!("No ion files found");
+            std::process::exit(1);
+        }
         std::fs::write(args.out, o).unwrap();
-        println!("Successfully transpiled ion to json")
     }
 }
 
@@ -105,10 +109,7 @@ fn usage() {
 iont | ion transpiler
 
 usage: 
-    iont <file> <out|optional>
-        flags:
-        -d <dir>
-        -o <out>
+    iont <file> <out>
 "#)
 }
 
