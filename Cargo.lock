@@ -65,9 +65,9 @@ dependencies = [
 
 [[package]]
 name = "ions"
-version = "0.1.2"
+version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a9d502b1f3980456259d14927c3f7343575f3c92f72745ae0f8dd2962abaa0f3"
+checksum = "a733539cb345c7c38a65db89afa2e0edb79512a9bf87d29c72b7820c3d28eef6"
 dependencies = [
  "anyhow",
  "pest",
@@ -78,7 +78,7 @@ dependencies = [
 
 [[package]]
 name = "iont"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "ions",
 ]

@@ -1,6 +1,6 @@
 [package]
 name = "iont"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Jose Salazar <znx3p0@gmail.com>"]
 edition = "2018"
 license = "MIT"
@@ -16,4 +16,4 @@ and transpile directories of ion files to another directory with json files
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-ions = "0.1.2"
+ions = "0.1"
