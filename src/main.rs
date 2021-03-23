@@ -17,7 +17,7 @@ fn main() {
             }
             let p = std::fs::read_to_string(s).unwrap();
             let p = ion_to_json(&p).unwrap();
-            std::fs::write(s, p).unwrap();
+            std::fs::write(opt.out, p).unwrap();
         },
         (1, true, _v, true) => {
             let p = all_files(opt.input.get(0).unwrap());
