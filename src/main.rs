@@ -8,6 +8,11 @@ fn main() {
 
     let opt = Options::parse();
 
+    if opt.input.len() >= 2 && opt.out != ""  && !opt.is_concat {
+        println!("output file is not allowed when concat is not enabled and various files are used as input");
+        std::process::exit(1);
+    }
+
     match (opt.input.len(), opt.is_concat, opt.verbose, opt.recursive) {
         (0, _, _, _) => unreachable!(),
         (1, false, v, false) => {
@@ -74,11 +79,11 @@ fn recurse_dir<T: AsRef<Path> + std::fmt::Display>(inp: T, out: T) -> Result<(),
     let d = std::fs::read_dir(&inp).unwrap();
     d.into_iter().for_each(|s| {
         if let Ok(s) =  s {
-            if let Ok(s) = s.file_type() {
-                if s.is_dir() {
+            // if let Ok(s) = s.file_type() {
+            //     if s.is_dir() {
 
-                }
-            }
+            //     }
+            // }
             let name = s.file_name();
             if name.to_str().unwrap().contains(".ion") {
                 let o = std::fs::read_to_string(&s.path()).unwrap();
